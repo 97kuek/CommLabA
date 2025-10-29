@@ -1,0 +1,19 @@
+        LD      IX, 00H
+SND0:   LD      ACC, (IX+00H)
+        OUT
+W0:     BNO     W0
+        ADD     IX, 01H
+        CMP     IX, 05H
+        BNZ     SND0
+
+        LD      IX, 00H
+RB:     BNI     RB
+        IN
+        ST      ACC, (IX+00H)
+        ADD     IX, 01H
+        CMP     IX, 05H
+        BNZ     RB
+
+        HLT
+        END
+

@@ -1,0 +1,43 @@
+        LD      IX, 00H
+NI1:    BNI     NI1
+        IN
+        ST      ACC, (IX+05H)
+        ADD     IX, 01H
+        CMP     IX, 05H
+        BNZ     NI1
+
+DATA:   EQU     00H
+WORK1:  EQU     10H
+WORK2:  EQU     20H
+
+        LD      IX, 09H
+        ST      IX, (WORK1)
+LP1:    LD      IX, 00H
+LP2:    LD      ACC, (IX+DATA+01H)
+        SUB     ACC, (IX+DATA)
+        BP      SWAP
+        BA      NEXT
+SWAP:   LD      ACC, (IX+DATA)
+        ST      ACC, (WORK2)
+        LD      ACC, (IX+DATA+01H)
+        ST      ACC, (IX+DATA)
+        LD      ACC, (WORK2)
+        ST      ACC, (IX+DATA+01H)
+NEXT:   ADD     IX, 01H
+        CMP     IX, (WORK1)
+        BNZ     LP2
+        LD      IX, (WORK1)
+        SUB     IX, 01H
+        ST      IX, (WORK1)
+        BNZ     LP1
+
+        LD      IX, 05H
+SND:    LD      ACC, (IX+DATA)
+        OUT
+NO1:    BNO     NO1
+        ADD     IX, 01H
+        CMP     IX, 0AH
+        BNZ     SND
+
+        HLT
+        END
